@@ -1,8 +1,7 @@
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials
+from auth import auth_manager
 
-# Authorize spotipy instance
-auth_manager = SpotifyClientCredentials()
+# Create authorized Spotipy instance
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
 # Search for given artist
