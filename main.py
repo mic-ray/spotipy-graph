@@ -17,4 +17,10 @@ artist_albums = sp.artist_albums(
 album_info = [
     {"name": album['name'], "id":album['id'], "date":album['release_date']} for album in artist_albums["items"]]
 
-print(album_info)
+# Fetch relevant track info of a single album
+album_ids = [x["id"] for x in album_info]
+
+track_info = [{"name": track['name'], "id": track['id']}
+              for track in sp.album_tracks(album_ids[0])["items"]]
+
+print(track_info)
