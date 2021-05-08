@@ -1,6 +1,14 @@
 import spotipy
 from auth import auth_manager
 
+import time
+
+
+def convert_to_mins(milliseconds):
+    return time.strftime("%M:%S", time.gmtime(
+        milliseconds//1000))
+
+
 # Create authorized Spotipy instance
 sp = spotipy.Spotify(auth_manager=auth_manager)
 
@@ -20,7 +28,7 @@ album_info = [
 # Fetch relevant track info of a single album
 album_ids = [x["id"] for x in album_info]
 
-track_info = [{"name": track['name'], "id": track['id']}
+track_info = [{"name": track['name'], "id": track['id'], "duration":convert_to_mins(track["duration_ms"])}
               for track in sp.album_tracks(album_ids[0])["items"]]
 
 print(track_info)
