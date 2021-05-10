@@ -30,7 +30,7 @@ def fetch_track_info(artist):
     album_ids = [album["id"] for album in album_info]
 
     # Fetch relevant track info of a single album
-    track_info = [{"name": track['name'], "id": track['id'], "duration":convert_to_mins(track["duration_ms"])}
+    track_info = [{"name": track['name'], "id": track['id'], "duration":track["duration_ms"]}
                   for track in sp.album_tracks(album_ids[0])["items"]]
 
     return track_info
