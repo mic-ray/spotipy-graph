@@ -19,18 +19,22 @@ def fetch_artist(artist):
     return artist_id
 
 
-def fetch_track_info(artist):
+def fetch_track_info(album_id):
+    track_info = []
+    index = 1
+    for track in sp.album_tracks(album_id)["items"]:
+        track_info.append(
+            {"track_number": index, "name": track['name'], "id": track['id'], "duration": track["duration_ms"]})
+        index += 1
+    return track_info
+
+
+def fetch_album_info(artist):
     # Fetch relevant info from the artists albums
     artist_albums = sp.artist_albums(
         artist_id=fetch_artist(artist), album_type="album")
 
     album_info = [
-        {"name": album['name'], "id":album['id'], "date":album['release_date']} for album in artist_albums["items"]]
+        {"name": album['name'], "id":album['id'], "release_date":album['release_date'], "tracks":fetch_track_info(album['id'])} for album in artist_albums["items"]]
 
-    album_ids = [album["id"] for album in album_info]
-
-    # Fetch relevant track info of a single album
-    track_info = [{"name": track['name'], "id": track['id'], "duration":track["duration_ms"]}
-                  for track in sp.album_tracks(album_ids[0])["items"]]
-
-    return track_info
+    return album_info
