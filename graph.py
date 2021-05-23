@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import textwrap
 
 # Use a black background for the displayed graph
 plt.style.use('dark_background')
@@ -13,6 +14,9 @@ def plot_bar(labels, data, y_axis_label):
 
     from random import sample
     random_colors = sample(color_names, len(labels))
+
+    # Wraps label text after 15 characters to next line
+    labels = [textwrap.fill(l, 15) for l in labels]
 
     # Plot a bar chart with the provided labels and data
     plt.bar(labels, data, color=random_colors)
